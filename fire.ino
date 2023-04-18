@@ -5,8 +5,9 @@
 
 CRGB leds[NUM_LEDS];
 int photoresistor = 0;              //this variable will hold a value based on the brightness of the ambient light
-int threshold = 900;                //if the photoresistor reading is below this value the the light will turn on
-int counter = 0;                   //how many times has the photoresister been hit?
+int threshold = 750;                //if the photoresistor reading is below this value the the light will turn on
+int counter = 0;                   //how many times has the photoresistor been hit?
+int goOutAt = 30;                  //how many times does the photoresistor have to be hit for the fire to go out?
 
 void setup()
 {
@@ -22,9 +23,9 @@ void loop()
   Serial.println(counter);
 
   // if the number of times the fire extinguisher has been moved over the photoresistor exceeds 25, the fire goes out
-  if (counter >= 25) {
+  if (counter >= goOutAt) {
     FastLED.clear(true);
-  } else if ((photoresistor > threshold) && (counter < 25)) {
+  } else if ((photoresistor > threshold) && (counter < goOutAt)) {
     counter++;
     Fire(55,120,15);
   }
